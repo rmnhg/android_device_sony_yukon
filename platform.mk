@@ -18,6 +18,10 @@ SOMC_PLATFORM := yukon
 
 SONY_ROOT:= device/sony/yukon/rootdir
 
+# etc
+PRODUCT_COPY_FILES += \
+    device/sony/yukon/rootdir/system/vendor/etc/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+
 # Media
 PRODUCT_COPY_FILES += \
     $(SONY_ROOT)/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
