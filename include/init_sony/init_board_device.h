@@ -17,6 +17,8 @@
 #ifndef __INIT_BOARD_DEVICE_H__
 #define __INIT_BOARD_DEVICE_H__
 
+#include <unistd.h>
+
 #include "init_board_common.h"
 #include "init_prototypes.h"
 
@@ -25,6 +27,10 @@
 #define LED_BLUE_PATH "/sys/class/leds/led:rgb_blue/brightness"
 #define VIBRATOR_PATH "/sys/class/timed_output/vibrator/enable"
 
+
+// Variables: init device specific
+pid_t pid_introduce_keycheck;
+
 // Class: init_board_device
 class init_board_device : public init_board_common
 {
@@ -32,11 +38,20 @@ public:
     // Board: Introduction for Keycheck
     virtual void introduce_keycheck()
     {
-        // Short vibration
-        vibrate(75);
+        // Launch the animation in a second thread
+        pid_introduce_keycheck = fork();
+        if (pid_introduce_keycheck == 0)
+        {
+            // Short vibration
+            vibrate(50);
 
-        // LED purple
-        led_color(255, 0, 255);
+            // LED boot selection colors
+            led_color(0, 255, 0);
+            msleep(1500);
+            led_color(255, 0, 0);
+            msleep(1500);
+            _exit(1);
+        }
     }
 
     // Board: finalization of keycheck
@@ -45,23 +60,30 @@ public:
         // Short vibration
         if (recoveryBoot)
         {
-            vibrate(75);
-            msleep(75);
+            vibrate(100);
         }
+
+        // Kill the animated keycheck to end
+        system_exec_kill(pid_introduce_keycheck, 0);    
+        
     }
 
     // Board: Introduction for Android
     virtual void introduce_android()
     {
-        // LED off
+        // LED Android colors
+        led_color(0, 255, 0);
+        msleep(1000);
+
+        // Power off LED
         led_color(0, 0, 0);
     }
 
     // Board: Introduction for Recovery
     virtual void introduce_recovery()
     {
-        // LED orange
-        led_color(255, 100, 0);
+        // LED Recovery colors
+        led_color(0, 0, 255);
     }
 
     // Board: Finish init execution
