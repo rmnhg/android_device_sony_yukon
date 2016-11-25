@@ -120,6 +120,9 @@ EXTENDED_FONT_FOOTPRINT := true
 # Include build helpers for QCOM proprietary
 -include vendor/qcom/proprietary/common/build/proprietary-build.mk
 
+# Set seccomp policy for media server
+BOARD_SECCOMP_POLICY += device/sony/yukon/seccomp
+
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
