@@ -45,6 +45,9 @@ TARGET_NO_KERNEL := false
 
 BOARD_VENDOR := sony
 
+# Init configuration for init_sony
+include device/sony/yukon/init/config.mk
+
 # Recovery
 RECOVERY_VARIANT := twrp
 TW_THEME := portrait_hdpi
