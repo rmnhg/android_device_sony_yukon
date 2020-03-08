@@ -67,6 +67,9 @@ BOARD_HAVE_BLUETOOTH_QCOM := true
 # NFC
 NFC_NXP_CHIP_TYPE := PN547C2
 
+# QCOM hardware
+BOARD_USES_QCOM_HARDWARE := true
+
 #  cmdline parameters
 ifneq ($(BOARD_USE_ENFORCING_SELINUX),true)
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
