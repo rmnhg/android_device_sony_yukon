@@ -45,6 +45,9 @@ TARGET_NO_KERNEL := false
 
 BOARD_VENDOR := sony
 
+# Recovery
+RECOVERY_VARIANT := twrp
+
 # Wi-Fi definitions for Qualcomm solution
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HOSTAPD_DRIVER := NL80211
