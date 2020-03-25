@@ -47,6 +47,7 @@ BOARD_VENDOR := sony
 
 # Recovery
 RECOVERY_VARIANT := twrp
+TW_THEME := portrait_hdpi
 
 # Wi-Fi definitions for Qualcomm solution
 BOARD_HAS_QCOM_WLAN := true
