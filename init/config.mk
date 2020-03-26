@@ -14,10 +14,8 @@
 
 # Init configuration for init_sony
 BOARD_SONY_INIT_FLAGS :=
-BOARD_SONY_INIT_INCLUDE := $(COMMON_PATH)/include
+BOARD_SONY_INIT_INCLUDE := device/sony/yukon/include
 
-# Board: yukon
-ifneq ($(filter yukon,$(PRODUCT_PLATFORM)),)
 ifneq ($(filter eagle,$(TARGET_DEVICE)),)
 BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="22"
 endif
@@ -29,55 +27,6 @@ BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="21"
 endif
 ifneq ($(filter tianchi,$(TARGET_DEVICE)),)
 BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="16"
-endif
-endif
-
-# Board: rhine
-ifneq ($(filter rhine,$(PRODUCT_PLATFORM)),)
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="16"
-endif
-
-# Board: shinano
-ifneq ($(filter shinano,$(PRODUCT_PLATFORM)),)
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="16"
-endif
-
-# Board: kanuti
-ifneq ($(filter kanuti,$(PRODUCT_PLATFORM)),)
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="21"
-endif
-
-# Board: kitakami
-ifneq ($(filter kitakami,$(PRODUCT_PLATFORM)),)
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="32"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MAJOR="259"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MINOR="0"
-endif
-
-# Board: loire
-ifneq ($(filter loire,$(PRODUCT_PLATFORM)),)
-ifneq ($(filter kugo,$(TARGET_DEVICE)),)
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="46"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MAJOR="259"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MINOR="14"
-else
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="42"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MAJOR="259"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MINOR="10"
-endif
-endif
-
-# Board: tone
-ifneq ($(filter tone,$(PRODUCT_PLATFORM)),)
-ifneq ($(filter kagura,$(TARGET_DEVICE)),)
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="48"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MAJOR="259"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MINOR="16"
-else
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_NUM="45"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MAJOR="259"
-BOARD_SONY_INIT_FLAGS += -DDEV_BLOCK_FOTA_MINOR="13"
-endif
 endif
 
 # FOTA check is broken on all devices
