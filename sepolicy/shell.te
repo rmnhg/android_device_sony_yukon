@@ -1,0 +1,4 @@
+get_prop(shell, boot_animation_prop)
+get_prop(shell, camera_prop)
+get_prop(shell, tee_prop)
+get_prop(shell, timekeep_prop)

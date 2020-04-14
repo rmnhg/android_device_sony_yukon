@@ -18,6 +18,7 @@ TARGET_BOARD_PLATFORM := msm8226
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a7
+TARGET_KERNEL_SOURCE := kernel/sony/msm8226
 
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 2048
@@ -37,6 +38,13 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1962934272
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 5460983808
 BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
+
+TARGET_NO_RADIOIMAGE := true
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RECOVERY := false
+TARGET_NO_KERNEL := false
+
+BOARD_VENDOR := sony
 
 # Wi-Fi definitions for Qualcomm solution
 BOARD_HAS_QCOM_WLAN := true
@@ -60,10 +68,63 @@ BOARD_HAVE_BLUETOOTH_QCOM := true
 # NFC
 NFC_NXP_CHIP_TYPE := PN547C2
 
-# Props for hotplugging
-TARGET_SYSTEM_PROP += device/sony/yukon/system.prop
+#  cmdline parameters
+ifneq ($(BOARD_USE_ENFORCING_SELINUX),true)
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+endif
+BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x3F ehci-hcd.park=3
+BOARD_KERNEL_CMDLINE += dwc3.maximum_speed=high dwc3_msm.prop_chg_detect=Y
+BOARD_KERNEL_CMDLINE += coherent_pool=8M
+BOARD_KERNEL_CMDLINE += sched_enable_power_aware=1 user_debug=31
+
+TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+
+# GFX
+USE_OPENGL_RENDERER := true
+TARGET_USES_ION := true
+TARGET_USES_C2D_COMPOSITION := true
+
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
+MAX_EGL_CACHE_SIZE := 2048*1024
+OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
+TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
+
+# Audio
+BOARD_USES_ALSA_AUDIO := true
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+
+# Camera
+TARGET_USES_AOSP := true
+BOARD_QTI_CAMERA_32BIT_ONLY := true
+BOARD_QTI_CAMERA_V2 := true
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+CAMERA_DAEMON_NOT_PRESENT := true
+
+
+# GPS definitions for Qualcomm solution
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
+BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
+TARGET_NO_RPC := true
+
+# Charger
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
+BOARD_CHARGER_ENABLE_SUSPEND := true
+
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/sony/yukon/sepolicy
+# BOARD_SEPOLICY_DIRS += device/sony/yukon/sepolicy
 
-include device/sony/common/CommonConfig.mk
+# Include build helpers for QCOM proprietary
+-include vendor/qcom/proprietary/common/build/proprietary-build.mk
+
+# Enable dex-preoptimization to speed up first boot sequence
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+    endif
+  endif
+endif
