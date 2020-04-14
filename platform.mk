@@ -48,6 +48,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/init.yukon.rc:root/init.yukon.rc \
     $(DEVICE_PATH)/rootdir/init.yukon.usb.rc:root/init.yukon.usb.rc \
+    $(DEVICE_PATH)/rootdir/init.yukon.srv.rc:root/init.yukon.srv.rc 
 
 # etc
 PRODUCT_COPY_FILES += \
