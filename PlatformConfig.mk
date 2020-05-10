@@ -128,6 +128,7 @@ EXTENDED_FONT_FOOTPRINT := true
 
 # SELinux
 # BOARD_SEPOLICY_DIRS += device/sony/yukon/sepolicy
+include device/qcom/sepolicy/sepolicy.mk
 
 # Include build helpers for QCOM proprietary
 -include vendor/qcom/proprietary/common/build/proprietary-build.mk
